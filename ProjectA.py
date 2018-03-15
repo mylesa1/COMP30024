@@ -27,29 +27,45 @@ class main():
             y = pos[0]
             x = pos[1]
 
-            # check right
-            if (x<7):
-                if (board[y][x+1] == "-"):
-                    positions.append([y, x+1])
-
-            if (x>1):# check left
+            if (x>0):# check left
                 if (board[y][x-1] == "-"):
                     positions.append([y, x-1])
+                elif x>1 and (board[y][x-1] == "@" or board[y][x-1] == "O"):
+
+                    if (board[y][x-2] == "-"):
+
+                        positions.append([y, x-2])
 
             # check up
             if (y>0):
                 if (board[y-1][x] == "-"):
                     positions.append([y-1, x])
+                elif y>1 and (board[y-1][x] == "@" or board[y+1][x] == "O"):
+                    if (board[y-2][x] == "-"):
+                        positions.append([y-2, x])
+
+            # check right
+            if (x<7):
+
+                if (board[y][x+1] == "-"):
+                    positions.append([y, x+1])
+
+                if x<6 and (board[y][x+1] == "@" or board[y][x+1] == "O"):
+
+                    if (board[y][x+2] == "-"):
+                        positions.append([y, x+2])
 
             # check down
             if (y<7):
                 if (board[y+1][x] == "-"):
                     positions.append([y+1, x])
+                elif y<6 and (board[y+1][x] == "@" or board[y+1][x] == "O"):
+                    if (board[y+2][x] == "-"):
+                        positions.append([y+2, x])
 
             totalPositions.append(positions)
 
         return totalPositions
-
 
     empty = [['X', '-', '-', '-', '-', '-', '-', 'X'],
             ['-', '-', '-', '-', '-', '-', '-', '-'],
@@ -62,20 +78,20 @@ class main():
             ['-', '-', '-', '-', '-', '-', '-', '-'],
             ['X', '-', '-', '-', '-', '-', '-', '-']]
 
-
-    test1 = [['X', '-', '-', 'O', '-', '-', '-', 'X'],
-            ['-', '-', '-', '-', '-', '-', '-', '@'],
-            ['-', '-', 'O', '@', '-', '-', '-', '-'],
-            ['-', 'O', '-', '-', '-', '@', '-', '-'],
-            ['-', '-', '-', '-', 'O', '-', 'O', '@'],
-            ['-', '-', '@', '-', '-', '-', '-', '-'],
-            ['-', 'O', '-', 'O', '@', '-', '&', '-'],
+    test1 = [['X', '-', '@', 'O', '-', '-', '-', 'X'],
+            ['-', '-', '-', '@', '-', '-', '-', '@'],
             ['-', '-', '-', '-', '-', '-', '-', '-'],
+            ['0', '-', '-', '-', '0', '-', '-', '-'],
             ['-', '-', '-', '-', '-', '-', '-', '-'],
+            ['-', '-', '0', '-', '-', '-', '-', '-'],
+            ['@', '-', '@', 'O', '@', '-', '-', '-'],
             ['X', '-', '-', '-', '-', '-', '-', 'X']]
 
 
     findPieces(test1, black, white)
 
-    print("\n",possibleMoves(black, test1))
-    print("\n",possibleMoves(white, test1))
+    movesB = possibleMoves(black, test1)
+    movesW = possibleMoves(white, test1)
+
+    print("black \n",movesB)
+    print("\n white \n",movesW)
